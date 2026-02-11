@@ -39,4 +39,4 @@ jobs:
 
     - name: Execute SSH command on EC2
       run: |
-        ssh -i private-key.pem $EC2_HOST "echo 'Connected successfully!' && uname -a"
+        ssh  -o StrictHostKeyChecking=no -i private-key.pem "$EC2_HOST_CLEAN" "echo 'Connected successfully!' && uname -a"
