@@ -8,6 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
+    - name: Inspect and sanitize EC2_HOST
+      run: |
+        echo "Raw EC2_HOST (debug, length only): ${#EC2_HOST} chars"
+        # Show safely-escaped representation (so we can see hidden chars)
+        printf 'EC2_HOST (escaped) = [%q]\n' "$EC2_HOST"
+    
+        # Remove Windows CR, trim whitespace
+        EC2_HOST_CLEAN="$(printf '%s' "$EC2_HOST" | tr -d '\r' | xargs)"
+        echo "After cleanup (escaped) = [$(printf '%q' "$EC2_HOST_CLEAN")]"
+        echo "EC2_HOST_CLEAN=$EC2_HOST_CLEAN" >> $GITHUB_ENV    
+
     - name: Decode PEM file
       run: |
         echo "$EC2_PEM_BASE64" | base64 --decode > private-key.pem
