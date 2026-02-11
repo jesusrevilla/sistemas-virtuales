@@ -7,6 +7,13 @@ jobs:
   ssh-ec2:
     runs-on: ubuntu-latest
 
+
+    env:
+      EC2_HOST: ${{ secrets.EC2_HOST }}      # e.g., ec2-user@54.12.34.56
+      EC2_PEM_BASE64: ${{ secrets.EC2_PEM_BASE64 }}
+      EC2_KNOWN_HOST: ${{ secrets.EC2_KNOWN_HOST }}
+    
+
     steps:
     
     - name: Inspect and sanitize EC2_HOST
